@@ -2,23 +2,23 @@
 #include <cmath>
 using namespace std;
 class Zoo {
-private:
+private: //Внутри класса и для дружественных функций
     char* name;
     char* country;
     char** animals;
     int* time;
     int ticket;
     int number_of_animals;
-public:
-    Zoo() {
-        name = "Не указано";
-        country = "Не указано";
+public:        //Доступ не ограничен
+    Zoo() { //Конструктор без параметров
+        name = "not specified";
+        country = "not specified";
         animals = nullptr;
         time = nullptr;
         ticket = 0;
         number_of_animals = 0;
     }
-    Zoo(char* name,char* country,char** animals, int* time,int ticket,int number_of_animals) {//Конструктор с параметрами
+    Zoo(char* name,char* country,char** animals, int* time,int ticket,int number_of_animals) { //Конструктор с параметрами
         this-> name = name;
         this-> country = country;
         this-> animals = animals;
@@ -26,7 +26,7 @@ public:
         this-> ticket = ticket;
         this-> number_of_animals = number_of_animals;
     }
-    Zoo(const Zoo &other) {
+    Zoo(const Zoo &other) { //Конструктор копирования
         name = other.name;
         country = other.country;
         animals = other.animals;
@@ -35,7 +35,7 @@ public:
         number_of_animals = other.number_of_animals;
     }
 
-    ~Zoo() {
+    ~Zoo() { //Деструктор
         delete[] name;
         delete[] country;
         delete[] animals;
@@ -145,7 +145,7 @@ public:
         int a1 = time[0]*60 + time[1];
         int a2 = time[2]*60 + time[3];
         int a3 = a2 - a1;
-        return floor(a3/n);
+        return floor(a3/n); //Окргуление вниз
     }
 
     char** spisokZooCoef(Zoo* zoos,int m){
@@ -157,12 +157,18 @@ public:
             zooCoef[i]=(zoos[i].ticket/zoos[i].number_of_animals);
         }
         int n = m;
-        while(n--){
+        while(n--){ //метод сортировки пузырьком
             int flag=0;
             for (int j = 0;j <n;j++){
                 if(zooCoef[j] > zooCoef[j+1]){
-                    swap(zooCoef[j],zooCoef[j+1]);
-                    swap(zooNames[j],zooNames[j+1]);
+                    int a1=zooCoef[j];
+                    int a2=zooCoef[j+1];
+                    char* b1 = zooNames[j];
+                    char* b2 = zooNames[j+1];
+                    zooCoef[j]=a2;
+                    zooCoef[j+1]=a1;
+                    zooNames[j]=b2;
+                    zooNames[j+1]=b1;
                     flag=1;
                 }
             }
@@ -277,9 +283,4 @@ int main() {
     char** c = third.spisokZooCountry(zoos,3,"Russia");
     for (int i = 0; i < 3;i++)
         cout<<c[i]<<endl;
-
-
-
-
-
 }
